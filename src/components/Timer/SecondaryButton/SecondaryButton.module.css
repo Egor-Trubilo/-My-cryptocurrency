@@ -1,0 +1,14 @@
+.secondaryButton {
+    font-size: 1rem;
+    padding: 0.125rem 0.75rem;
+    height: 1.75rem;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    transition: transform 0.1s ease-in-out;
+}
+
+.secondaryActive,
+.secondaryButton:active {
+    background-color: rgba(0, 0, 0, 0.15);
+    transform: translateY(0.125rem);
+}
