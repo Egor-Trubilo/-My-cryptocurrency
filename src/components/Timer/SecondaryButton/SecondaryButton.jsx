@@ -4,15 +4,18 @@ import classes from "./SecondaryButton.module.css";
 
 const SecondaryButton = ({children, active, onClick}) => {
     return (
-        <button
-            onClick={onClick}
-            className={clsx(
-                classes.secondaryButton,
-                active && classes.secondaryActive
-            )}
-        >
-            {children}
-        </button>
+        <li>
+            <button
+                onClick={onClick}
+                className={clsx(
+                    classes.secondaryButton,
+                    active && classes.secondaryActive
+                )}
+            >
+                {children}
+            </button>
+        </li>
+
     );
 };
 

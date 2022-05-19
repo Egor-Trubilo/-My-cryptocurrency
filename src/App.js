@@ -16,7 +16,7 @@ const AppSection = styled.div`
   align-items: center;
   * {
     margin: 0;
-    padding: 0;
+    //padding: 0;
     box-sizing: border-box;
     scroll-behavior: smooth;
    

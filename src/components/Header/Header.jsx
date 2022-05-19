@@ -13,7 +13,7 @@ const HeaderContainer = styled.header`
   display: flex;
   padding: 0 0.75rem;
   max-width: 38.75rem;
-  //margin: auto;
+  margin: auto;
   width: 100%;
   align-items: center;
   text-align: center;
@@ -22,7 +22,8 @@ const HeaderContainer = styled.header`
     display: flex;
     justify-content: space-between;
     width: 100%;
-    height: 3.75rem;
+    padding-top: 0.7rem;
+    flex-flow: row;
   }
 
   .nav {
@@ -30,12 +31,7 @@ const HeaderContainer = styled.header`
     gap: 0.625rem;
     align-items: center;
   }
-
-  .label {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-  }
+  
 
   .description {
     padding-left: 0.4rem;

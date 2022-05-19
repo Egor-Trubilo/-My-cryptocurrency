@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from "styled-components";
-import Icon from "../../UI/Icon";
 
 
 const ButtonCss = styled.button`
@@ -10,10 +9,10 @@ const ButtonCss = styled.button`
   opacity: 0.9;
   background-color: rgba(255, 255, 255, 0.2);
   color: white;
-  padding: 0.5rem 0.75rem;
   min-width: 4.375rem;
   transition: transform 0.1s ease-in-out;
   gap: 0.25rem;
+  
 
   :hover {
     opacity: 1;
@@ -22,14 +21,19 @@ const ButtonCss = styled.button`
   :active {
     transform: translateY(0.125rem);
   }
+  .buttonDesc{
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+  }
   
 `
 
-const Button = ({children, onClick, icon}) => {
+const Button = ({children, onClick}) => {
     return (
         <ButtonCss onClick={onClick}>
 
-            <span className='label'>
+            <span className='buttonDesc'>
               {children}
         </span>
         </ButtonCss>
