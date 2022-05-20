@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import styled from "styled-components";
 import SecondaryButton from "./SecondaryButton/SecondaryButton";
 import {useDispatch, useSelector} from "react-redux";
@@ -6,8 +6,9 @@ import useCountDown from "../../Hooks/useCountDown";
 import {formatTime} from "../../helpers";
 import PrimaryButton from "./PrimaryButton/PrimaryButton";
 import NextButton from "./NextButton/NextButton";
-import {POMODORO} from "../../constants";
+import {LONG_BREAK, POMODORO, SHORT_BREAK} from "../../constants";
 import {player} from "../../utils";
+import Progress from "./Progress/Progress";
 
 const TimerSection = styled.section`
  
@@ -56,6 +57,9 @@ const TimerSection = styled.section`
     user-select: none;
   }
 `
+const tickingAudio = player({
+    loop: true,
+});
 
 
 const Timer = () => {
@@ -72,22 +76,45 @@ const Timer = () => {
         autoBreaks,
     } = useSelector((state) => state.timer)
 
-const {ticking, timeLeft, progress} = useCountDown({
+const {ticking, timeLeft, progress, stop, start, reset} = useCountDown({
     minutes: modes[mode].time,
     onStart: ()=> {
         if (mode === POMODORO) {
-            player.play();
+            tickingAudio.play();
         }
     },
     onStop: ()=> {
         if (mode === POMODORO) {
-            player.stop();
+            tickingAudio.stop();
         }
     },
 })
 
+    const jumpTo =  useCallback((id) => {
+        reset()
+
+    },[reset])
+
+    const next = useCallback(() => {
+      switch (mode) {
+          case  LONG_BREAK:
+          case SHORT_BREAK:
+
+      }
+    },[] )
+
+    const toggleTimer =  useCallback(() => {
+      tickingAudio.play();
+      if (ticking) {
+          stop();
+      } else {
+          start()
+      }
+    },[stop, start, ticking])
+
     return (
         <TimerSection>
+            <Progress percent={progress}/>
             <div className='container'>
                 <div className='content'>
                     <ul>
@@ -110,7 +137,10 @@ const {ticking, timeLeft, progress} = useCountDown({
                     </div>
                     <div className='actionButtons'>
                         <div className='left'>
-                            <PrimaryButton/>
+                            <PrimaryButton
+                            active={ticking}
+                            onClick={toggleTimer}
+                            />
                         </div>
                         <div className='right'>
                             <NextButton/>

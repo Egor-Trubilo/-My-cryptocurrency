@@ -8,3 +8,7 @@ export const formatTime = (time)=> {
     return dayjs.duration(time, 'seconds').format('mm:ss');
 
 }
+
+function getFaviconEl() {
+    return document.getElementById("favicon");
+}
