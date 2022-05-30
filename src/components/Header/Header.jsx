@@ -62,7 +62,7 @@ const Header = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link to='/'>
+                        <Link to='settings'>
                             <Button>
                                 <span className='label'>
                                     <SettingsOutlinedIcon/>

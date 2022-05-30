@@ -3,7 +3,7 @@ import {createSlice} from "@reduxjs/toolkit";
 
 
 const initialState = {
-    mode: POMODORO,
+    mode: SHORT_BREAK,
     round: 1,
     autoBreaks: false,
     autoPomodoro: false,
@@ -38,6 +38,13 @@ export const timerSlice = createSlice({
         },
         incrementRound: (state) => {
             state.round += 1;
+        },
+        updateModeTime: (state, action) => {
+            const {mode, time} = action.payload;
+            state.modes[mode].time= time
+        },
+        toggleAutoPomodoro: (state) =>{
+            state.autoPomodoro = !state.autoPomodoro;
         }
 
 

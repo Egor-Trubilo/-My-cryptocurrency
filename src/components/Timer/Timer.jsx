@@ -1,14 +1,15 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import styled from "styled-components";
 import SecondaryButton from "./SecondaryButton/SecondaryButton";
 import {useDispatch, useSelector} from "react-redux";
 import useCountDown from "../../Hooks/useCountDown";
-import {formatTime} from "../../helpers";
+import {formatTime, updateTitle} from "../../helpers";
 import PrimaryButton from "./PrimaryButton/PrimaryButton";
 import NextButton from "./NextButton/NextButton";
-import {LONG_BREAK, POMODORO, SHORT_BREAK} from "../../constants";
+import {CONFIRM, LONG_BREAK, POMODORO, SHORT_BREAK} from "../../constants";
 import {player} from "../../utils";
 import Progress from "./Progress/Progress";
+import {incrementRound, setMode} from "../../redux/timerSlice";
 
 const TimerSection = styled.section`
  
@@ -57,9 +58,17 @@ const TimerSection = styled.section`
     user-select: none;
   }
 `
+
+const buttonSound = player({
+    asset: "sounds/button-press.wav",
+    volume: 0.5,
+});
+
 const tickingAudio = player({
     loop: true,
 });
+
+const alarmAudio = player({});
 
 
 const Timer = () => {
@@ -88,23 +97,91 @@ const {ticking, timeLeft, progress, stop, start, reset} = useCountDown({
             tickingAudio.stop();
         }
     },
+    onComplete: () => {
+        next();
+        if (mode === POMODORO) {
+            tickingAudio.stop();
+        }
+        alarmAudio.play();
+    },
 })
+
+    useEffect(()=>{
+        updateTitle(timeLeft, mode)
+    },[mode,timeLeft])
 
     const jumpTo =  useCallback((id) => {
         reset()
+        // updateFavicon(id);
+        dispatch(setMode(id))
 
-    },[reset])
+    },[dispatch, reset])
+
+    useEffect(() => {
+        tickingAudio.stop();
+        tickingAudio.setAudio(tickingSound);
+        if (ticking && mode === POMODORO) {
+            tickingAudio.play();
+        }
+    }, [mode, ticking, tickingSound]);
+
+    useEffect(() => {
+        alarmAudio.setAudio(alarmSound);
+    }, [alarmSound]);
+
+
 
     const next = useCallback(() => {
       switch (mode) {
           case  LONG_BREAK:
           case SHORT_BREAK:
+              jumpTo(POMODORO);
+              if (autoPomodoro) {
+                  start();
+              }
+              break
+          default:
+              jumpTo(SHORT_BREAK);
+              dispatch(incrementRound());
+              if (autoBreaks) {
+                  start();
+              }
+              break;
+
 
       }
-    },[] )
+    },[dispatch, jumpTo, mode, autoPomodoro, autoBreaks, start] )
+
+    const confirmAction = useCallback(
+        (cb) => {
+            let allowed = true;
+            if (ticking) {
+                stop();
+                // allowed = confirm(CONFIRM);
+                start();
+            }
+
+            if (allowed) {
+                cb();
+            }
+        },
+        [start, stop, ticking]
+    );
+
+
+    const confirmNext = useCallback(() => {
+        confirmAction(next);
+    }, [confirmAction, next]);
+
+    const confirmJump = useCallback(
+        (id) => {
+            confirmAction(() => jumpTo(id));
+        },
+        [confirmAction, jumpTo]
+    );
 
     const toggleTimer =  useCallback(() => {
-      tickingAudio.play();
+        buttonSound.play();
       if (ticking) {
           stop();
       } else {
@@ -122,9 +199,9 @@ const {ticking, timeLeft, progress, stop, start, reset} = useCountDown({
                         {Object.values(modes).map(({ id, label }) => (
                             <SecondaryButton
                                 key={id}
-                                active={id === mode}
+                                active={id===mode}
                                 id={id}
-
+                                onClick={() => confirmJump(id)}
                             >
                                 {label}
                             </SecondaryButton>
@@ -143,7 +220,9 @@ const {ticking, timeLeft, progress, stop, start, reset} = useCountDown({
                             />
                         </div>
                         <div className='right'>
-                            <NextButton/>
+                            <NextButton
+                                onClick={confirmNext}
+                            />/>
                         </div>
                     </div>
                 </div>
