@@ -1,4 +1,4 @@
-import {LONG_BREAK, POMODORO, SHORT_BREAK} from "../constants";
+import {DIGITAL_SOUND, LONG_BREAK, POMODORO, SHORT_BREAK} from "../constants";
 import {createSlice} from "@reduxjs/toolkit";
 
 
@@ -8,6 +8,8 @@ const initialState = {
     autoBreaks: false,
     autoPomodoro: false,
     longBreakInterval: 4,
+    alarmSound: DIGITAL_SOUND,
+    alarmVolume: 100,
     modes: {
         [POMODORO]: {
             id: POMODORO,
@@ -45,7 +47,16 @@ export const timerSlice = createSlice({
         },
         toggleAutoPomodoro: (state) =>{
             state.autoPomodoro = !state.autoPomodoro;
-        }
+        },
+        setLongBreakInterval: (state, action) => {
+            state.longBreakInterval =action.payload;
+        },
+        toggleAutoBreaks: (state) => {
+            state.autoBreaks = !state.autoBreaks;
+        },
+        setAlarmVolume: (state, action) => {
+            state.alarmVolume = action.payload;
+        },
 
 
     }
@@ -60,11 +71,7 @@ export const {
     toggleAutoBreaks,
     toggleAutoPomodoro,
     setLongBreakInterval,
-    setAlarmSound,
-    setAlarmVolume,
-    setAlarmRepeat,
-    setTickingSound,
-    setTickingVolume,
+
 } = timerSlice.actions;
 
 export default timerSlice.reducer;

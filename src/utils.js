@@ -22,7 +22,7 @@ const stop = () => {
   audio.pause()
 }
 
-const setVolume = (value) => {audio.volume = value / 100}
+const setVolume = (value) => (audio.volume = value / 100)
 
 const setAudio = (src) => {
   audio.src =src

@@ -3,17 +3,16 @@ import classes from './NextButton.module.css'
 import clsx from "clsx";
 import SkipNextIcon from '@mui/icons-material/SkipNext';
 
-const NextButton = ({ onClick }) => {
+const NextButton = ({ onClick, className }) => {
     return (
-        <div>
 
-            <button onClick={onClick} className={clsx(classes.nextButton, classes.nextButtonActive)} >
-               <span><SkipNextIcon size={48}/></span>
+            <button onClick={onClick} className={clsx(classes.nextButton, className)} >
+               <span><SkipNextIcon /></span>
             </button>
 
 
 
-        </div>
+
     );
 };
 

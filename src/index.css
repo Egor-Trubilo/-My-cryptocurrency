@@ -2,7 +2,7 @@
 *::after,
 *::before {
   margin: 0;
-  /*padding: 0;*/
+  padding: 0;
   font-family: "Noto Sans Display", sans-serif;
   box-sizing: border-box;
   font-size: 16px;
@@ -21,6 +21,7 @@ button {
   box-shadow: none;
   border-radius: 0.25rem;
   user-select: none;
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 a {

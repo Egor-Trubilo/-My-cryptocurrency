@@ -7,7 +7,7 @@ const ButtonCss = styled.button`
   justify-content: center;
   align-items: center;
   opacity: 0.9;
-  background-color: rgba(255, 255, 255, 0.2);
+  
   color: white;
   min-width: 4.375rem;
   transition: transform 0.1s ease-in-out;
@@ -31,7 +31,7 @@ const ButtonCss = styled.button`
 
 const Button = ({children, onClick}) => {
     return (
-        <ButtonCss onClick={onClick}>
+        <ButtonCss onClick={onClick} >
 
             <span className='buttonDesc'>
               {children}

@@ -50,18 +50,6 @@ const Header = () => {
                 <Logo/>
                 <ul className='nav'>
                     <li>
-                        <Link to='/'>
-                            <Button>
-                                <span className='label'>
-                                    <AddchartOutlinedIcon/>
-                                </span>
-                                <span className='description'>
-                                    Report
-                                </span>
-                            </Button>
-                        </Link>
-                    </li>
-                    <li>
                         <Link to='settings'>
                             <Button>
                                 <span className='label'>
@@ -71,19 +59,6 @@ const Header = () => {
                                 <span className='description'>
                                     Setting
                                 </span>
-                            </Button>
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to='/'>
-                            <Button>
-                                <span className='label'>
-                                    <AccountCircleIcon/>
-                                </span>
-                                <span className='description'>
-                                        Login
-                                    </span>
-
                             </Button>
                         </Link>
                     </li>
