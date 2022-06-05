@@ -3,7 +3,7 @@ import {createSlice} from "@reduxjs/toolkit";
 
 
 const initialState = {
-    mode: SHORT_BREAK,
+    mode: POMODORO,
     round: 1,
     autoBreaks: false,
     autoPomodoro: false,
